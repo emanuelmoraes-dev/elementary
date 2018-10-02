@@ -1,0 +1,6 @@
+clear
+[3J[H[2Jflex -i lexica.l
+bison sintatica.y
+gcc -o compilador sintatica.tab.c -lfl
+./compilador < entrada.ely
+ v syntax error
