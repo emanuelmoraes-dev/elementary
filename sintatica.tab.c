@@ -70,9 +70,11 @@
 	#include "str.h"
 	#include "var.h"
 
+	int lineno = 0;
+
 	int yylex();
 	void yyerror(char *s){
-		printf("%s\n",s);
+		printf("%s\n in %d\n", s, lineno);
 	}
 
 	Lista* vars;
@@ -81,7 +83,7 @@
 		eraser_var_list(vars, vars->cabeca);
 	}
 
-#line 85 "sintatica.tab.c" /* yacc.c:339  */
+#line 87 "sintatica.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -128,11 +130,11 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 20 "sintatica.y" /* yacc.c:355  */
+#line 22 "sintatica.y" /* yacc.c:355  */
 
 	char* Str;
 
-#line 136 "sintatica.tab.c" /* yacc.c:355  */
+#line 138 "sintatica.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -149,7 +151,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 153 "sintatica.tab.c" /* yacc.c:358  */
+#line 155 "sintatica.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -389,18 +391,18 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  9
+#define YYFINAL  12
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   19
+#define YYLAST   22
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  11
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  2
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  6
+#define YYNRULES  8
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  21
+#define YYNSTATES  24
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
@@ -447,7 +449,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    30,    30,    34,    37,    48,    59
+       0,    32,    32,    36,    40,    52,    65,    66,    67
 };
 #endif
 
@@ -471,10 +473,10 @@ static const yytype_uint16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF -11
+#define YYPACT_NINF -5
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-11)))
+  (!!((Yystate) == (-5)))
 
 #define YYTABLE_NINF -1
 
@@ -485,9 +487,9 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-       1,    -7,    -5,   -11,     2,    11,     3,     7,     6,   -11,
-       1,     8,     1,     9,   -11,    12,   -11,     1,     1,   -11,
-     -11
+      -2,     0,     2,     5,    -2,     3,    14,    -3,     8,    -5,
+      -5,     9,    -5,    -2,    10,    -2,    13,    -5,    15,    -5,
+      -2,    -2,    -5,    -5
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -495,21 +497,21 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     0,     0,     6,     0,     0,     0,     0,     0,     1,
-       0,     0,     0,     0,     2,     0,     5,     0,     0,     4,
-       3
+       0,     0,     0,     6,     0,     0,     0,     0,     0,     7,
+       8,     0,     1,     0,     0,     0,     0,     2,     0,     5,
+       0,     0,     4,     3
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -11,   -10
+      -5,    -4
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     5
+      -1,     6
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -517,35 +519,37 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      14,     6,    16,     7,     1,     2,     3,    19,    20,     4,
-      10,     9,     8,    11,    12,    13,    17,    15,     0,    18
+      10,     1,     2,     3,    13,     4,     5,    14,     7,    17,
+       8,    19,     9,    11,    12,    15,    22,    23,    16,    18,
+      20,     0,    21
 };
 
 static const yytype_int8 yycheck[] =
 {
-      10,     8,    12,     8,     3,     4,     5,    17,    18,     8,
-       7,     0,    10,    10,     7,     9,     7,     9,    -1,     7
+       4,     3,     4,     5,     7,     7,     8,    10,     8,    13,
+       8,    15,     7,    10,     0,     7,    20,    21,     9,     9,
+       7,    -1,     7
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     3,     4,     5,     8,    12,     8,     8,    10,     0,
-       7,    10,     7,     9,    12,     9,    12,     7,     7,    12,
-      12
+       0,     3,     4,     5,     7,     8,    12,     8,     8,     7,
+      12,    10,     0,     7,    10,     7,     9,    12,     9,    12,
+       7,     7,    12,    12
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    11,    12,    12,    12,    12,    12
+       0,    11,    12,    12,    12,    12,    12,    12,    12
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     4,     6,     5,     4,     1
+       0,     2,     4,     6,     5,     4,     1,     2,     2
 };
 
 
@@ -1222,65 +1226,81 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 30 "sintatica.y" /* yacc.c:1646  */
+#line 32 "sintatica.y" /* yacc.c:1646  */
     {
-			puts("yaya 1");
+			// puts("yaya 1");
 			add_var(vars, (yyvsp[-2].Str), "");
 		}
-#line 1231 "sintatica.tab.c" /* yacc.c:1646  */
+#line 1235 "sintatica.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 34 "sintatica.y" /* yacc.c:1646  */
+#line 36 "sintatica.y" /* yacc.c:1646  */
     {
-			puts("yaya 2");
+			// puts("yaya 2");
+			// printf("adiconando variavél  $2 = %s, $4 = %s\n", $2,$4);
 			add_var(vars, (yyvsp[-4].Str), (yyvsp[-2].Str));
 		}
-#line 1240 "sintatica.tab.c" /* yacc.c:1646  */
+#line 1245 "sintatica.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 37 "sintatica.y" /* yacc.c:1646  */
+#line 40 "sintatica.y" /* yacc.c:1646  */
     {
-			puts("yaya 3");
+			// puts("yaya 3");
+
 			Var* var = get_var(vars, (yyvsp[-4].Str));
 			
 			if (var == NULL) {
-				printf("Erro! Variável %s não encontrada!", (yyvsp[-4].Str));
+				printf("Erro! Variável %s não encontrada!\n", (yyvsp[-4].Str));
 				clear();
 				exit(100);
 			}
 
 			set_str(var->value, (yyvsp[-2].Str));
 		}
-#line 1257 "sintatica.tab.c" /* yacc.c:1646  */
+#line 1263 "sintatica.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 48 "sintatica.y" /* yacc.c:1646  */
+#line 52 "sintatica.y" /* yacc.c:1646  */
     {
-			puts("yaya 4");
+			// puts("yaya 4");
 			Var* var = get_var(vars, (yyvsp[-2].Str));
 
+			// printf("tamanho da lista = %d\n", vars->tamanho);
+
 			if (var == NULL) {
-				printf("Erro! Variável %s não encontrada!", (yyvsp[-2].Str));
+				printf("Erro! Variável %s não encontrada!\n", (yyvsp[-2].Str));
 				clear();
 				exit(100);
 			}
 
 			printf("%s\n", var->value->c_str);
 		}
-#line 1274 "sintatica.tab.c" /* yacc.c:1646  */
+#line 1282 "sintatica.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 59 "sintatica.y" /* yacc.c:1646  */
-    { puts("yaya 5"); }
-#line 1280 "sintatica.tab.c" /* yacc.c:1646  */
+#line 65 "sintatica.y" /* yacc.c:1646  */
+    { /*puts("yaya 5");*/ }
+#line 1288 "sintatica.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 7:
+#line 66 "sintatica.y" /* yacc.c:1646  */
+    { /*puts("yaya 6");*/ }
+#line 1294 "sintatica.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 8:
+#line 67 "sintatica.y" /* yacc.c:1646  */
+    { /*puts("yaya 7");*/ }
+#line 1300 "sintatica.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1284 "sintatica.tab.c" /* yacc.c:1646  */
+#line 1304 "sintatica.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1508,7 +1528,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 61 "sintatica.y" /* yacc.c:1906  */
+#line 69 "sintatica.y" /* yacc.c:1906  */
 
 
 #include "lex.yy.c"

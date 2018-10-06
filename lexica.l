@@ -11,8 +11,10 @@ C [a-zA-Z_0-9]
     // printf(">> %s\n", yytext);
     return LET;
 }
-"\n" { 
+"\n" {
     // printf(">> <quebra de linha>\n");
+    extern int lineno; 
+    lineno++;
     return ENDL;
 }
 "=" { 
@@ -23,22 +25,23 @@ C [a-zA-Z_0-9]
     // printf(">> %s\n", yytext); 
     return WRITE;
 }
-"FIM" {
+"@" {
     // printf(">> %s\n", yytext);
     return FIM;
 }
 {W}{C}* {
-    // printf(">> %s\n", yytext);
+    // printf(">> %s ID\n", yytext);
     int len = strlen(yytext);
     yylval.Str = (char*) malloc(sizeof(char) * len + 1);
     strcpy(yylval.Str, yytext);
     return ID;
 }
-{C}* {
-    // printf(">> %s\n", yytext);
+"\""{C}*"\"" {
+    // printf(">> %s VALUE\n", yytext);
     int len = strlen(yytext);
     yylval.Str = (char*) malloc(sizeof(char) * len + 1);
-    strcpy(yylval.Str, yytext);
-    return VALUE; 
+    strcpy(yylval.Str, yytext+1);
+    yylval.Str[len-2] = '\0';
+    return VALUE;
 }
 %%

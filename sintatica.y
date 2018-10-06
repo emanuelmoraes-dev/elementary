@@ -5,9 +5,11 @@
 	#include "str.h"
 	#include "var.h"
 
+	int lineno = 0;
+
 	int yylex();
 	void yyerror(char *s){
-		printf("%s\n",s);
+		printf("%s\n in %d\n", s, lineno);
 	}
 
 	Lista* vars;
@@ -28,35 +30,41 @@
 
 %%
 	ely: LET ID ENDL ely {
-			puts("yaya 1");
+			// puts("yaya 1");
 			add_var(vars, $2, "");
 		}
 		| LET ID '=' VALUE ENDL ely {
-			puts("yaya 2");
+			// puts("yaya 2");
+			// printf("adiconando variavél  $2 = %s, $4 = %s\n", $2,$4);
 			add_var(vars, $2, $4);
 		} | ID '=' VALUE ENDL ely {
-			puts("yaya 3");
+			// puts("yaya 3");
+
 			Var* var = get_var(vars, $1);
 			
 			if (var == NULL) {
-				printf("Erro! Variável %s não encontrada!", $1);
+				printf("Erro! Variável %s não encontrada!\n", $1);
 				clear();
 				exit(100);
 			}
 
 			set_str(var->value, $3);
 		} | WRITE ID ENDL ely {
-			puts("yaya 4");
+			// puts("yaya 4");
 			Var* var = get_var(vars, $2);
 
+			// printf("tamanho da lista = %d\n", vars->tamanho);
+
 			if (var == NULL) {
-				printf("Erro! Variável %s não encontrada!", $2);
+				printf("Erro! Variável %s não encontrada!\n", $2);
 				clear();
 				exit(100);
 			}
 
 			printf("%s\n", var->value->c_str);
-		} | FIM { puts("yaya 5"); } ;
+		} | FIM { /*puts("yaya 5");*/ }
+		  | FIM ENDL { /*puts("yaya 6");*/ }
+		  | ENDL ely { /*puts("yaya 7");*/ };
 
 %%
 
