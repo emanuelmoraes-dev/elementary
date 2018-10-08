@@ -1,6 +1,6 @@
 let v2="Oi"
 write v2
-v2="90"
+v2=90
 write v2
 let nome="Emanuel Moraes"
 write nome
