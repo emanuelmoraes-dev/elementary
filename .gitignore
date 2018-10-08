@@ -1,2 +1,4 @@
 compilador
 main
+lex.yy.c
+sintatica.tab.c
