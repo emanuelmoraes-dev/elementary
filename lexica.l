@@ -4,6 +4,7 @@
 
 W [a-zA-Z_]
 C [a-zA-Z_0-9]
+CS [a-zA-Z_0-9 ]
 
 %%
 
@@ -36,7 +37,7 @@ C [a-zA-Z_0-9]
     strcpy(yylval.Str, yytext);
     return ID;
 }
-"\""{C}*"\"" {
+"\""{CS}*"\"" {
     // printf(">> %s VALUE\n", yytext);
     int len = strlen(yytext);
     yylval.Str = (char*) malloc(sizeof(char) * len + 1);

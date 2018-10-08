@@ -449,7 +449,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    32,    32,    36,    40,    52,    65,    66,    67
+       0,    32,    32,    37,    43,    59,    74,    75,    76
 };
 #endif
 
@@ -1230,43 +1230,52 @@ yyreduce:
     {
 			// puts("yaya 1");
 			add_var(vars, (yyvsp[-2].Str), "");
+			free((yyvsp[-2].Str));
 		}
-#line 1235 "sintatica.tab.c" /* yacc.c:1646  */
+#line 1236 "sintatica.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 36 "sintatica.y" /* yacc.c:1646  */
+#line 37 "sintatica.y" /* yacc.c:1646  */
     {
 			// puts("yaya 2");
 			// printf("adiconando variavél  $2 = %s, $4 = %s\n", $2,$4);
 			add_var(vars, (yyvsp[-4].Str), (yyvsp[-2].Str));
+			free((yyvsp[-4].Str));
+			free((yyvsp[-2].Str));
 		}
-#line 1245 "sintatica.tab.c" /* yacc.c:1646  */
+#line 1248 "sintatica.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 40 "sintatica.y" /* yacc.c:1646  */
+#line 43 "sintatica.y" /* yacc.c:1646  */
     {
 			// puts("yaya 3");
 
 			Var* var = get_var(vars, (yyvsp[-4].Str));
+
+			free((yyvsp[-4].Str));
 			
 			if (var == NULL) {
 				printf("Erro! Variável %s não encontrada!\n", (yyvsp[-4].Str));
 				clear();
+				free((yyvsp[-2].Str));
 				exit(100);
 			}
 
 			set_str(var->value, (yyvsp[-2].Str));
+			free((yyvsp[-2].Str));
 		}
-#line 1263 "sintatica.tab.c" /* yacc.c:1646  */
+#line 1270 "sintatica.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 52 "sintatica.y" /* yacc.c:1646  */
+#line 59 "sintatica.y" /* yacc.c:1646  */
     {
 			// puts("yaya 4");
 			Var* var = get_var(vars, (yyvsp[-2].Str));
+
+			free((yyvsp[-2].Str));
 
 			// printf("tamanho da lista = %d\n", vars->tamanho);
 
@@ -1278,29 +1287,29 @@ yyreduce:
 
 			printf("%s\n", var->value->c_str);
 		}
-#line 1282 "sintatica.tab.c" /* yacc.c:1646  */
+#line 1291 "sintatica.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 65 "sintatica.y" /* yacc.c:1646  */
-    { /*puts("yaya 5");*/ }
-#line 1288 "sintatica.tab.c" /* yacc.c:1646  */
+#line 74 "sintatica.y" /* yacc.c:1646  */
+    { /*puts("yaya 5");*/ clear(); }
+#line 1297 "sintatica.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 66 "sintatica.y" /* yacc.c:1646  */
-    { /*puts("yaya 6");*/ }
-#line 1294 "sintatica.tab.c" /* yacc.c:1646  */
+#line 75 "sintatica.y" /* yacc.c:1646  */
+    { /*puts("yaya 6");*/ clear(); }
+#line 1303 "sintatica.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 67 "sintatica.y" /* yacc.c:1646  */
+#line 76 "sintatica.y" /* yacc.c:1646  */
     { /*puts("yaya 7");*/ }
-#line 1300 "sintatica.tab.c" /* yacc.c:1646  */
+#line 1309 "sintatica.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1304 "sintatica.tab.c" /* yacc.c:1646  */
+#line 1313 "sintatica.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1528,7 +1537,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 69 "sintatica.y" /* yacc.c:1906  */
+#line 78 "sintatica.y" /* yacc.c:1906  */
 
 
 #include "lex.yy.c"
