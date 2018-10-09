@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Inverte linhas
 function adapter {
     python2 -c "\
 arq = open('$1', 'r')
@@ -16,6 +17,6 @@ clear
 flex -i lexica.l
 bison sintatica.y
 gcc -o compilador sintatica.tab.c -lfl
-# (adapter entrada.ely && echo "@") | cat
+# adapter entrada.ely
 adapter entrada.ely | ./compilador
 # ./compilador < entrada.ely

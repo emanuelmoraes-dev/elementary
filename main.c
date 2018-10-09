@@ -3,6 +3,11 @@
 #include "str.h"
 #include "var.h"
 
+void apagarVar(void* v) {
+    Var* var = (Var*) v;
+    eraser_var(var);
+}
+
 int main(int argc, char** argv) {
 
     Lista* vars = cria_lista();
@@ -17,7 +22,7 @@ int main(int argc, char** argv) {
 
     puts(var->value->c_str);
 
-    eraser_var_list(vars, vars->cabeca);
+    apagarListaDestrutor(vars, vars->cabeca, apagarVar);
 
     return 0;
 }

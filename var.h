@@ -40,13 +40,4 @@ void eraser_var(Var* var) {
     free(var);
 }
 
-void eraser_var_list(Lista* lista, Elemento* elemento) {
-    for (Elemento* it = lista->cabeca->proximo; it != NULL; it = it->proximo) {
-        Var* var = (Var*) it->valor;
-        eraser_var(var);
-    }
-
-    removerLista(lista, lista->cabeca);
-}
-
 #endif // VAR_H_INCLUDED
