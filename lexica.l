@@ -1,5 +1,8 @@
 %{
     #include <string.h>
+    #include "log.h"
+
+    void token(const char *tipo, const char *valor) { log("<<%s>>\t : %s", tipo, valor); }
 %}
 
 W [a-zA-Z_]
@@ -9,34 +12,34 @@ D [0-9]
 %%
 
 "let" { 
-    // printf(">> %s, <<let>>\n", yytext);
+    token("let", yytext);
     return LET;
 }
 "\n" {
-    // printf(">> <quebra de linha>, <<ENDL>>\n");
+    token("ENDL", "<quebra de linha>");
     return ENDL;
 }
 "=" { 
-    // printf(">> %s, <<=>>\n", yytext);
+    token("=", yytext);
     return '=';
 }
 "write" { 
-    // printf(">> %s, <<write>>\n", yytext); 
+    token("WRITE", yytext);
     return WRITE;
 }
 "@" {
-    // printf(">> %s, <<FIM>>\n", yytext);
+    token("FIM", yytext);
     return FIM;
 }
 {W}{C}* {
-    // printf(">> %s, <<ID>>\n", yytext);
+    token("ID", yytext);
     int len = strlen(yytext);
     yylval.Str = (char*) malloc(sizeof(char) * len + 1);
     strcpy(yylval.Str, yytext);
     return ID;
 }
 "\"".*"\"" {
-    // printf(">> %s, <<VALUE>>\n", yytext);
+    token("VALUE", yytext);
     int len = strlen(yytext);
     yylval.Str = (char*) malloc(sizeof(char) * len + 1);
     strcpy(yylval.Str, yytext+1);
@@ -44,38 +47,38 @@ D [0-9]
     return VALUE;
 }
 {D}+(\.{D}+)? {
-    // printf(">> %s, <<ID>>\n", yytext);
+    token("NUM", yytext);
     int len = strlen(yytext);
     yylval.Str = (char*) malloc(sizeof(char) * len + 1);
     strcpy(yylval.Str, yytext);
     return NUM;
 }
 "+" {
-    // printf(">> %s, <<+>>\n", yytext);
+    token("+", yytext);
     return '+';
 }
 "-" {
-    // printf(">> %s, <<+>>\n", yytext);
+    token("-", yytext);
     return '-';
 }
 "*" {
-    // printf(">> %s, <<+>>\n", yytext);
+    token("*", yytext);
     return '*';
 }
 "/" {
-    // printf(">> %s, <<+>>\n", yytext);
+    token("/", yytext);
     return '/';
 }
 ".." {
-    // printf(">> %s, <<+>>\n", yytext);
+    token("..", yytext);
     return CONCAT;
 }
 "(" {
-    // printf(">> %s, <<(>>\n", yytext);
+    token("(", yytext);
     return '(';
 }
 ")" {
-    // printf(">> %s, <<)>>\n", yytext);
+    token(")", yytext);
     return ')';
 }
 %%

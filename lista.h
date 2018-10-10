@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define foreach(it, lista)\
+    for (Elemento* it = (lista)->cabeca; it != NULL; it = it->proximo)
+
 // funções que manipulam a lista
 
 // criando um elemento da lista
@@ -50,7 +53,7 @@ void adicionar(Lista* lista, void* valor) {
 // busca um elemento da lista que possui a posição fornecida pelo usuario
 Elemento* buscarPorPosicao(Lista* lista, int posicao) {
     int id = -1; // Mudado! Linha ainda para testar!
-    for (Elemento* it = lista->cabeca; it != NULL; it = it->proximo)
+    foreach(it, lista)
         if (id++ == posicao)
             return it;
     return NULL;
@@ -81,7 +84,7 @@ void apagarProximo(Lista* lista, Elemento* elemento) {
 
 // apaga da memoria o elemento recebido, o elemento mesmo
 void apagarPorElemento(Lista* lista, void* valor) {
-    for (Elemento* it = lista->cabeca; it->proximo != NULL; it = it->proximo) {
+    foreach(it, lista) {
         if (it->proximo->valor == valor) {
             apagarProximo(lista, it);
             break;
@@ -109,11 +112,10 @@ void* removerProximo(Lista* lista, Elemento* elemento) {
 
 // remove  da lista sem remover da memoria o elemento recebido, o elemento mesmo
 void* removerPorElemento(Lista* lista, void* valor) {
-    for (Elemento* it = lista->cabeca; it->proximo != NULL; it = it->proximo) {
-        if (it->proximo->valor == valor) {
+    foreach(it, lista)
+        if (it->proximo->valor == valor)
             return removerProximo(lista, it);
-        }
-    }
+    return NULL;
 }
 
 // remove da lista sem remover da memoria o elemento que possui o id recebido 

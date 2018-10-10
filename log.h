@@ -3,8 +3,17 @@
 
 #include <stdio.h>
 
+#ifdef __DEBUG__
 #define log(format, ...) \
-  fprintf(stderr, "%s:%d: ", __FILE__, __LINE__);\
+  fprintf(stderr, "%s:%d   ", __FILE__, __LINE__);\
+  fprintf(stderr, format, ##__VA_ARGS__);\
+  fprintf(stderr, "\n");
+#else
+#define log(format, ...)
+#endif
+
+#define error(format, ...) \
+  fprintf(stderr, "%s:%d [ERROR] ", __FILE__, __LINE__);\
   fprintf(stderr, format, ##__VA_ARGS__);\
   fprintf(stderr, "\n");
 

@@ -5,10 +5,11 @@
 	#include "str.h"
 	#include "var.h"
 	#include "util.h"
+  #include "log.h"
 
 	int yylex();
 	void yyerror(char *s){
-		printf("%s\n", s);
+		error("%s", s);
 	}
 
 	Lista* vars;
@@ -41,11 +42,10 @@
 %type <Str> ely;
 
 %%
-	ely: LET ID ENDL ely {
-			// puts("yaya 1");
+ely: LET ID ENDL ely {
+      log("LET ID(=%s) ENDL", $2);
 			add_var(vars, $2, "");
 			free($2);
-			// puts("end Yaya 1");
 		}
 		| LET ID '=' e ENDL ely {
 			// puts("yaya 2");
