@@ -39,7 +39,7 @@ Lista* cria_lista() {
     return lista;
 }
 
-// adiciona um elemento na lista
+// adiciona um elemento da lista
 void adicionar(Lista* lista, void* valor) {
     lista->ultimo->proximo = cria_elemento();
     lista->ultimo->proximo->valor = valor;
@@ -54,18 +54,6 @@ Elemento* buscarPorPosicao(Lista* lista, int posicao) {
         if (id++ == posicao)
             return it;
     return NULL;
-}
-
-// adiciona um elemento na lista na posicao informada
-void adicionarEm(Lista* lista, void* valor, int posicao) {
-    Elemento* ant = buscarPorPosicao(lista, posicao-1);
-    Elemento* prx = ant->proximo;
-    ant->proximo = cria_elemento();
-    ant->proximo->valor = valor;
-    ant->proximo->proximo = prx;
-    if (prx == NULL)
-        lista->ultimo = ant->proximo;
-    lista->tamanho++;
 }
 
 // apaga da memoria o elemento que vem depois do elemento recebido
@@ -96,30 +84,29 @@ void apagarPorPosicao(Lista* lista, int posicao) {
 }
 
 // remove da lista sem remover da memoria o elemento que vem depois do elemento recebido
-void* removerProximo(Lista* lista, Elemento* elemento) {
+void removerProximo(Lista* lista, Elemento* elemento) {
     if (lista->tamanho == 0)
-        return NULL;
+        return;
     Elemento* alvo = elemento->proximo; // Elemento que eu quero remover
     elemento->proximo = alvo->proximo; // Alvo é excluido da lista
-    void* valor = alvo->valor;
     free(alvo); // Alvo é excluido da memária RAM
     lista->tamanho--;
-    return valor;
 }
 
 // remove  da lista sem remover da memoria o elemento recebido, o elemento mesmo
-void* removerPorElemento(Lista* lista, void* valor) {
+void removerPorElemento(Lista* lista, void* valor) {
     for (Elemento* it = lista->cabeca; it->proximo != NULL; it = it->proximo) {
         if (it->proximo->valor == valor) {
-            return removerProximo(lista, it);
+            removerProximo(lista, it);
+            break;
         }
     }
 }
 
 // remove da lista sem remover da memoria o elemento que possui o id recebido 
-void* removerPorPosicao(Lista* lista, int posicao) {
+void removerPorPosicao(Lista* lista, int posicao) {
     Elemento* c = buscarPorPosicao(lista, posicao-1);
-    return removerProximo(lista, c);
+    removerProximo(lista, c);
 }
 
 // apaga a lista e os elementos da lista da memoria
@@ -130,42 +117,12 @@ void apagarLista(Lista* lista, Elemento* elemento) {
     apagarProximo(lista, elemento);
 }
 
-void apagarListaDestrutor(Lista* lista, Elemento* elemento, void (*destrutor)(void*)) {
-    if (elemento == NULL) return;
-    if (elemento->proximo == NULL) return;
-    apagarListaDestrutor(lista, elemento->proximo, destrutor);
-    void* valor = removerProximo(lista, elemento);
-    destrutor(valor);
-}
-
 // remove a lista da memoria sem remover os contatdos da lista da memoria
 void removerLista(Lista* lista, Elemento* elemento) {
     if (elemento == NULL) return;
     if (elemento->proximo == NULL) return;
     removerLista(lista, elemento->proximo);
     removerProximo(lista, elemento);
-}
-
-// Adiciona no topo da lista
-void adicionarTopo(Lista* lista, void* valor) {
-    adicionarEm(lista, valor, 0);
-}
-
-// Retorna o valor do topo da lista
-void* topo(Lista* lista) {
-    if (lista->tamanho == 0)
-        return NULL;
-    return lista->cabeca->proximo->valor;
-}
-
-// Remove elemento do topo da lista
-void* removerTopo(Lista* lista) {
-    return removerProximo(lista, lista->cabeca);
-}
-
-// Remove e apaga da memória elemento do topo da lista
-void apagarTop(Lista* lista) {
-    apagarProximo(lista, lista->cabeca);
 }
 
 #endif // LISTA_H_INCLUDED

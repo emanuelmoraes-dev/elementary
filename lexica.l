@@ -14,6 +14,8 @@ D [0-9]
 }
 "\n" {
     // printf(">> <quebra de linha>, <<ENDL>>\n");
+    extern int lineno; 
+    lineno++;
     return ENDL;
 }
 "=" { 
@@ -49,33 +51,5 @@ D [0-9]
     yylval.Str = (char*) malloc(sizeof(char) * len + 1);
     strcpy(yylval.Str, yytext);
     return NUM;
-}
-"+" {
-    // printf(">> %s, <<+>>\n", yytext);
-    return '+';
-}
-"-" {
-    // printf(">> %s, <<+>>\n", yytext);
-    return '-';
-}
-"*" {
-    // printf(">> %s, <<+>>\n", yytext);
-    return '*';
-}
-"/" {
-    // printf(">> %s, <<+>>\n", yytext);
-    return '/';
-}
-".." {
-    // printf(">> %s, <<+>>\n", yytext);
-    return CONCAT;
-}
-"(" {
-    // printf(">> %s, <<(>>\n", yytext);
-    return '(';
-}
-")" {
-    // printf(">> %s, <<)>>\n", yytext);
-    return ')';
 }
 %%
