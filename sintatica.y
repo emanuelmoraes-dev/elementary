@@ -49,12 +49,32 @@
 		    | ENDL start { /*puts("yaya 7");*/ }
 	ely: LET ID {
 			// puts("yaya 1");
+
+			Var* var = get_var(vars, $2);
+
+			if (var != NULL) {
+				printf("Erro na linha %d! Variável '%s' já declarada!\n", lineno-1, $2);
+				free($2);
+				clear();
+				exit(102);
+			}
+
 			add_var(vars, $2, "");
 			free($2);
 			// puts("end Yaya 1");
 		}
 		| LET ID '=' e {
 			// puts("yaya 2");
+
+			Var* var = get_var(vars, $2);
+
+			if (var != NULL) {
+				printf("Erro na linha %d! Variável '%s' já declarada!\n", lineno-1, $2);
+				free($2);
+				clear();
+				exit(102);
+			}
+
 			String* e = removerTopo(stack);
 			// printf("adiconando variavél  $2 = %s, $4 = %s\n", $2, e->c_str);
 			add_var(vars, $2, e->c_str);
@@ -64,18 +84,18 @@
 		} | ID '=' e {
 			// puts("yaya 3");
 
-			String* e = removerTopo(stack);
-
 			Var* var = get_var(vars, $1);
 
-			free($1);
-			
 			if (var == NULL) {
-				printf("Erro! Variável %s não encontrada!\n", $1);
+				printf("Erro na linha %d! Variável '%s' não encontrada!\n", lineno-1, $1);
+				free($1);
 				clear();
-				eraser_str(e);
 				exit(101);
 			}
+
+			String* e = removerTopo(stack);
+
+			free($1);
 
 			set_str(var->value, e->c_str);
 			eraser_str(e);
@@ -190,7 +210,7 @@
 			sscanf(r->c_str, "%lf", &e2);
 
 			if (e2 >= -PRECISION_DEFAULT && e2 <= PRECISION_DEFAULT) {
-				printf("Erro: Divisão por zero inválida!");
+				printf("Erro na linha %d! Divisão por zero inválida!", lineno-1);
 				eraser_str(fator);
 				eraser_str(r);
 				clear();
@@ -214,7 +234,7 @@
 			sscanf(r->c_str, "%lf", &e2);
 
 			if (e2 >= -PRECISION_DEFAULT && e2 <= PRECISION_DEFAULT) {
-				printf("Erro: Divisão por zero inválida!");
+				printf("Erro na linha %d! Divisão por zero inválida!", lineno-1);
 				eraser_str(fator);
 				eraser_str(r);
 				clear();
@@ -268,7 +288,7 @@
 
 			if (var == NULL) {
 				// puts("WTF!");
-				printf("Erro: A Variável '%s' não foi declarada!\n", $1);
+				printf("Erro na linha %d! A Variável '%s' não foi declarada!\n", lineno-1, $1);
 				free($1);
 				// puts("WTW!");
 				clear();
