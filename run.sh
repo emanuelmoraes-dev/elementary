@@ -24,6 +24,5 @@ clear
 flex -i lexica.l
 bison sintatica.y
 gcc -o compilador sintatica.tab.c $LIBS $FLAGS
-# adapter entrada.ely
+#adapter entrada.ely | ./compilador
 ./compilador < entrada.ely
-# ./compilador < entrada.ely

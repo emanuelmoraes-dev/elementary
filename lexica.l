@@ -2,7 +2,7 @@
     #include <string.h>
     #include "log.h"
 
-    void token(const char *tipo, const char *valor) { log("<<%s>>\t : %s", tipo, valor); }
+#define token(tipo,valor) log("<%s>\t : %s", tipo, valor)
 %}
 
 W [a-zA-Z_]
