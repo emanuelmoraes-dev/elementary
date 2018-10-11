@@ -1,6 +1,4 @@
-let v2="Oi"
-write v2
-v2=90
-write v2
-let nome="Emanuel Moraes"
-write nome
+let valor=(2*3)..7
+write valor
+valor = "Oi"
+write valor
