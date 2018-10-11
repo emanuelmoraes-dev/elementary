@@ -8,13 +8,9 @@
 
 	int lineno = 1;
 
-	int yylex();
-	void yyerror(char *s){
-		printf("Error %s in line %d\n", s, lineno);
-	}
-
 	Lista* vars;
 	Lista* stack;
+	Lista* tokensStr;
 
 	void apagarVar(void* v) {
 		Var* var = (Var*) v;
@@ -29,6 +25,13 @@
 	void clear() {
 		apagarListaDestrutor(vars, vars->cabeca, apagarVar);
 		apagarListaDestrutor(stack, stack->cabeca, apagarString);
+		apagarLista(tokensStr, tokensStr->cabeca);
+	}
+
+	int yylex();
+	void yyerror(char *s){
+		printf("Error %s in line %d\n", s, lineno);
+		clear();
 	}
 %}
 
@@ -54,13 +57,11 @@
 
 			if (var != NULL) {
 				printf("Erro na linha %d! Variável '%s' já declarada!\n", lineno-1, $2);
-				free($2);
 				clear();
 				exit(102);
 			}
 
 			add_var(vars, $2, "");
-			free($2);
 			// puts("end Yaya 1");
 		}
 		| LET ID '=' e {
@@ -70,7 +71,6 @@
 
 			if (var != NULL) {
 				printf("Erro na linha %d! Variável '%s' já declarada!\n", lineno-1, $2);
-				free($2);
 				clear();
 				exit(102);
 			}
@@ -78,7 +78,6 @@
 			String* e = removerTopo(stack);
 			// printf("adiconando variavél  $2 = %s, $4 = %s\n", $2, e->c_str);
 			add_var(vars, $2, e->c_str);
-			free($2);
 			eraser_str(e);
 			// puts("end Yaya 2");
 		} | ID '=' e {
@@ -88,14 +87,11 @@
 
 			if (var == NULL) {
 				printf("Erro na linha %d! Variável '%s' não encontrada!\n", lineno-1, $1);
-				free($1);
 				clear();
 				exit(101);
 			}
 
 			String* e = removerTopo(stack);
-
-			free($1);
 
 			set_str(var->value, e->c_str);
 			eraser_str(e);
@@ -275,12 +271,10 @@
 		| VALUE {
 			// puts("Value");
 			adicionarTopo(stack, (void*) new_str($1));
-			free($1);
 			// puts("end Value");
 		} | NUM {
 			// puts("Num");
 			adicionarTopo(stack, (void*) new_str($1));
-			free($1);
 			// puts("end Num");
 		} | ID {
 			// puts("Id");
@@ -289,14 +283,12 @@
 			if (var == NULL) {
 				// puts("WTF!");
 				printf("Erro na linha %d! A Variável '%s' não foi declarada!\n", lineno-1, $1);
-				free($1);
 				// puts("WTW!");
 				clear();
 				exit(101);
 			}
 			// puts("2");
 
-			free($1);
 			// puts("3");
 			adicionarTopo(stack, (void*) new_str(var->value->c_str));
 			// puts("4");
@@ -310,6 +302,7 @@
 int main(){
 	vars = cria_lista();
 	stack = cria_lista();
+	tokensStr = cria_lista();
 	yyparse();
 	clear();
 }

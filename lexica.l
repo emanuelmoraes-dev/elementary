@@ -1,5 +1,6 @@
 %{
     #include <string.h>
+    #include "lista.h"
 %}
 
 W [a-zA-Z_]
@@ -35,6 +36,10 @@ D [0-9]
     int len = strlen(yytext);
     yylval.Str = (char*) malloc(sizeof(char) * len + 1);
     strcpy(yylval.Str, yytext);
+
+    extern Lista* tokensStr;
+    adicionar(tokensStr, yylval.Str);
+
     return ID;
 }
 "\"".*"\"" {
@@ -43,6 +48,10 @@ D [0-9]
     yylval.Str = (char*) malloc(sizeof(char) * len + 1);
     strcpy(yylval.Str, yytext+1);
     yylval.Str[len-2] = '\0';
+
+    extern Lista* tokensStr;
+    adicionar(tokensStr, yylval.Str);
+
     return VALUE;
 }
 {D}+(\.{D}+)? {
@@ -50,6 +59,10 @@ D [0-9]
     int len = strlen(yytext);
     yylval.Str = (char*) malloc(sizeof(char) * len + 1);
     strcpy(yylval.Str, yytext);
+
+    extern Lista* tokensStr;
+    adicionar(tokensStr, yylval.Str);
+
     return NUM;
 }
 "+" {
