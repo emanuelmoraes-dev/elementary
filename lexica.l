@@ -27,7 +27,7 @@ D [0-9]
     // printf(">> %s, <<write>>\n", yytext); 
     return WRITE;
 }
-"end" {
+"@" {
     // printf(">> %s, <<FIM>>\n", yytext);
     return FIM;
 }

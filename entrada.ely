@@ -1,5 +1,4 @@
-let valor=2*3..7
+let valor=(2*3)..7
 write valor
 valor = "Oi"
 write valor
-end

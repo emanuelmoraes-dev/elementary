@@ -164,29 +164,7 @@
 			eraser_str(termo);
 			eraser_str(r);
 			// puts("end Subtração");
-		} | CONCAT f t_ {
-			// puts("Concatenação");
-			String* fator = (String*) removerTopo(stack);
-			String* r = (String*) removerTopo(stack);
-			// printf("%s..%s\n", fator->c_str, r->c_str);
-			String* result = new_str(fator->c_str);
-			cat_str(result, r->c_str);
-			adicionarTopo(stack, (void*) result);
-			eraser_str(fator);
-			eraser_str(r);
-			// puts("end Concatenação");
-		} | CONCAT f {
-			// puts("Concatenação");
-			String* fator = (String*) removerTopo(stack);
-			String* r = (String*) removerTopo(stack);
-			// printf("%s..%s\n", fator->c_str, r->c_str);
-			String* result = new_str(fator->c_str);
-			cat_str(result, r->c_str);
-			adicionarTopo(stack, (void*) result);
-			eraser_str(fator);
-			eraser_str(r);
-			// puts("end Concatenação");
-		};
+		} ;
 	t: f t_ | f;
 	t_: '*' f t_ {
 			// puts("Multiplicação");
@@ -266,6 +244,28 @@
 			eraser_str(fator);
 			eraser_str(r);
 			// puts("End Divisão");
+		} | CONCAT f t_ {
+			// puts("Concatenação");
+			String* fator = (String*) removerTopo(stack);
+			String* r = (String*) removerTopo(stack);
+			// printf("%s..%s\n", fator->c_str, r->c_str);
+			String* result = new_str(fator->c_str);
+			cat_str(result, r->c_str);
+			adicionarTopo(stack, (void*) result);
+			eraser_str(fator);
+			eraser_str(r);
+			// puts("end Concatenação");
+		} | CONCAT f {
+			// puts("Concatenação");
+			String* fator = (String*) removerTopo(stack);
+			String* r = (String*) removerTopo(stack);
+			// printf("%s..%s\n", fator->c_str, r->c_str);
+			String* result = new_str(fator->c_str);
+			cat_str(result, r->c_str);
+			adicionarTopo(stack, (void*) result);
+			eraser_str(fator);
+			eraser_str(r);
+			// puts("end Concatenação");
 		};
 	f: '(' e ')'
 		| VALUE {
