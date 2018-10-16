@@ -49,7 +49,7 @@
 	start: ely ENDL start 
 			| FIM { /*puts("yaya 5");*/ }
 		    | FIM ENDL { /*puts("yaya 6");*/ }
-		    | ENDL start { /*puts("yaya 7");*/ }
+		    | ENDL start { /*puts("yaya 7");*/ };
 	ely: LET ID {
 			// puts("yaya 1");
 
@@ -249,8 +249,8 @@
 			String* fator = (String*) removerTopo(stack);
 			String* r = (String*) removerTopo(stack);
 			// printf("%s..%s\n", fator->c_str, r->c_str);
-			String* result = new_str(fator->c_str);
-			cat_str(result, r->c_str);
+			String* result = new_str(r->c_str);
+			cat_str(result, fator->c_str);
 			adicionarTopo(stack, (void*) result);
 			eraser_str(fator);
 			eraser_str(r);
@@ -260,8 +260,8 @@
 			String* fator = (String*) removerTopo(stack);
 			String* r = (String*) removerTopo(stack);
 			// printf("%s..%s\n", fator->c_str, r->c_str);
-			String* result = new_str(fator->c_str);
-			cat_str(result, r->c_str);
+			String* result = new_str(r->c_str);
+			cat_str(result, fator->c_str);
 			adicionarTopo(stack, (void*) result);
 			eraser_str(fator);
 			eraser_str(r);

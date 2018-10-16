@@ -1,5 +1,5 @@
 let valor=(2*3)..7
-write valor
+write "Resultado: "..valor
 valor = "Oi"
 write valor
 end
