@@ -1,5 +1,7 @@
-let valor=7..2*3
-write "Resultado: "..valor
-valor = "Oi"
-write valor
+let a = 20
+let b = a*2
+write a.."+"..b.."="..(a+b)
+let c
+c = a+b.." aiai"
+write c
 end

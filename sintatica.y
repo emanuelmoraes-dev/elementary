@@ -46,7 +46,7 @@
 %type <Str> ely;
 
 %%
-	start: ely ENDL start 
+	start: ely ENDL start
 			| FIM { /*puts("yaya 5");*/ }
 		    | FIM ENDL { /*puts("yaya 6");*/ }
 		    | ENDL start { /*puts("yaya 7");*/ };
@@ -103,8 +103,32 @@
 			eraser_str(e);
 			// puts("end Yaya 4");
 		} ;
-	e: t e_ | t;
-	e_: '+' t e_ {
+	e: exp e_ | exp;
+	e_: CONCAT exp e_ {
+			// puts("Concatenação");
+			String* fator = (String*) removerTopo(stack);
+			String* r = (String*) removerTopo(stack);
+			// printf("%s..%s\n", fator->c_str, r->c_str);
+			String* result = new_str(r->c_str);
+			cat_str(result, fator->c_str);
+			adicionarTopo(stack, (void*) result);
+			eraser_str(fator);
+			eraser_str(r);
+			// puts("end Concatenação");
+		} | CONCAT exp {
+			// puts("Concatenação");
+			String* fator = (String*) removerTopo(stack);
+			String* r = (String*) removerTopo(stack);
+			// printf("%s..%s\n", fator->c_str, r->c_str);
+			String* result = new_str(r->c_str);
+			cat_str(result, fator->c_str);
+			adicionarTopo(stack, (void*) result);
+			eraser_str(fator);
+			eraser_str(r);
+			// puts("end Concatenação");
+		};
+	exp: t exp_ | t;
+	exp_: '+' t exp_ {
 			// puts("SOMA");
 			String* termo = (String*) removerTopo(stack);
 			String* r = (String*) removerTopo(stack);
@@ -134,7 +158,7 @@
 			eraser_str(termo);
 			eraser_str(r);
 			// puts("end Soma");
-		} | '-' t e_ {
+		} | '-' t exp_ {
 			// puts("Subtração");
 			String* termo = (String*) removerTopo(stack);
 			String* r = (String*) removerTopo(stack);
@@ -244,28 +268,6 @@
 			eraser_str(fator);
 			eraser_str(r);
 			// puts("End Divisão");
-		} | CONCAT f t_ {
-			// puts("Concatenação");
-			String* fator = (String*) removerTopo(stack);
-			String* r = (String*) removerTopo(stack);
-			// printf("%s..%s\n", fator->c_str, r->c_str);
-			String* result = new_str(r->c_str);
-			cat_str(result, fator->c_str);
-			adicionarTopo(stack, (void*) result);
-			eraser_str(fator);
-			eraser_str(r);
-			// puts("end Concatenação");
-		} | CONCAT f {
-			// puts("Concatenação");
-			String* fator = (String*) removerTopo(stack);
-			String* r = (String*) removerTopo(stack);
-			// printf("%s..%s\n", fator->c_str, r->c_str);
-			String* result = new_str(r->c_str);
-			cat_str(result, fator->c_str);
-			adicionarTopo(stack, (void*) result);
-			eraser_str(fator);
-			eraser_str(r);
-			// puts("end Concatenação");
 		};
 	f: '(' e ')'
 		| VALUE {

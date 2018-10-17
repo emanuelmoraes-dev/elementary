@@ -16,7 +16,7 @@ typedef struct st_string {
 String* new_str(const char* s) {
     String* str = (String*) malloc(sizeof(String));
     str->lenght = strlen(s);
-    str->__length_allocated = MIN(10, str->lenght * 2);
+    str->__length_allocated = MAX(str->lenght * 2, 10);
     str->c_str = (char*) malloc(sizeof(char) * str->__length_allocated);
     strcpy(str->c_str, s);
     return str;

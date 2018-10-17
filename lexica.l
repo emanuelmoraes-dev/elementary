@@ -6,6 +6,7 @@
 W [a-zA-Z_]
 C [a-zA-Z_0-9]
 D [0-9]
+A [^\"]
 
 %%
 
@@ -42,7 +43,7 @@ D [0-9]
 
     return ID;
 }
-"\"".*"\"" {
+"\""{A}*"\"" {
     // printf(">> %s, <<VALUE>>\n", yytext);
     int len = strlen(yytext);
     yylval.Str = (char*) malloc(sizeof(char) * len + 1);
