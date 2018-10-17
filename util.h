@@ -3,6 +3,11 @@
 #define PRECISION_DEFAULT 0.00000001
 
 int len_double (double num, double precision) {
+    short vp = 2;
+
+    if (num < 0)
+        vp++;
+
     int i = num;
     int len = 0;
     int part = 0;
@@ -18,10 +23,8 @@ int len_double (double num, double precision) {
 
     num -= part;
 
-    short vp = 2;
-
     while (num < -precision || num > precision) {
-        vp = 1;
+        vp--;
         int dig = num * 10;
         num = num * 10 - dig;
         len++;

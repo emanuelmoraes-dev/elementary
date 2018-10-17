@@ -4,4 +4,6 @@ write a.."+"..b.."="..(a+b)
 let c
 c = a+b.." concatenado com isto"
 write c
+let v = 3-2
+write v
 end

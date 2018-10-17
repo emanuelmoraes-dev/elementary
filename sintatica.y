@@ -136,7 +136,7 @@
 			double e1, e2;
 			sscanf(termo->c_str, "%lf", &e1);
 			sscanf(r->c_str, "%lf", &e2);
-			double result = e1 + e2;
+			double result = e2 + e1;
 			char result_str[ len_double(result, PRECISION_DEFAULT) + 1 ];
 			sprintf(result_str, "%lf", result);
 			adicionarTopo(stack, (void*) new_str(result_str));
@@ -151,7 +151,7 @@
 			double e1, e2;
 			sscanf(termo->c_str, "%lf", &e1);
 			sscanf(r->c_str, "%lf", &e2);
-			double result = e1 + e2;
+			double result = e2 + e1;
 			char result_str[ len_double(result, PRECISION_DEFAULT) + 1 ];
 			sprintf(result_str, "%lf", result);
 			adicionarTopo(stack, (void*) new_str(result_str));
@@ -166,7 +166,7 @@
 			double e1, e2;
 			sscanf(termo->c_str, "%lf", &e1);
 			sscanf(r->c_str, "%lf", &e2);
-			double result = e1 - e2;
+			double result = e2 - e1;
 			char result_str[ len_double(result, PRECISION_DEFAULT) + 1 ];
 			sprintf(result_str, "%lf", result);
 			adicionarTopo(stack, (void*) new_str(result_str));
@@ -177,11 +177,11 @@
 			// puts("Subtração");
 			String* termo = (String*) removerTopo(stack);
 			String* r = (String*) removerTopo(stack);
-			printf("%s-%s\n", termo->c_str, r->c_str);
+			// printf("%s-%s\n", termo->c_str, r->c_str);
 			double e1, e2;
 			sscanf(termo->c_str, "%lf", &e1);
 			sscanf(r->c_str, "%lf", &e2);
-			double result = e1 - e2;
+			double result = e2 - e1;
 			char result_str[ len_double(result, PRECISION_DEFAULT) + 1 ];
 			sprintf(result_str, "%lf", result);
 			adicionarTopo(stack, (void*) new_str(result_str));
@@ -194,11 +194,11 @@
 			// puts("Multiplicação");
 			String* fator = (String*) removerTopo(stack);
 			String* r = (String*) removerTopo(stack);
-			printf("%s*%s\n", fator->c_str, r->c_str);
+			// printf("%s*%s\n", fator->c_str, r->c_str);
 			double e1, e2;
 			sscanf(fator->c_str, "%lf", &e1);
 			sscanf(r->c_str, "%lf", &e2);
-			double result = e1 * e2;
+			double result = e2 * e1;
 			char result_str[ len_double(result, PRECISION_DEFAULT) + 1 ];
 			sprintf(result_str, "%lf", result);
 			adicionarTopo(stack, (void*) new_str(result_str));
@@ -213,7 +213,7 @@
 			double e1, e2;
 			sscanf(fator->c_str, "%lf", &e1);
 			sscanf(r->c_str, "%lf", &e2);
-			double result = e1 * e2;
+			double result = e2 * e1;
 			char result_str[ len_double(result, PRECISION_DEFAULT) + 1 ];
 			sprintf(result_str, "%lf", result);
 			adicionarTopo(stack, (void*) new_str(result_str));
@@ -229,7 +229,7 @@
 			sscanf(fator->c_str, "%lf", &e1);
 			sscanf(r->c_str, "%lf", &e2);
 
-			if (e2 >= -PRECISION_DEFAULT && e2 <= PRECISION_DEFAULT) {
+			if (e1 >= -PRECISION_DEFAULT && e1 <= PRECISION_DEFAULT) {
 				printf("Erro na linha %d! Divisão por zero inválida!", lineno-1);
 				eraser_str(fator);
 				eraser_str(r);
@@ -237,7 +237,7 @@
 				exit(100);
 			}
 
-			double result = e1 / e2;
+			double result = e2 / e1;
 			char result_str[ len_double(result, PRECISION_DEFAULT) + 1 ];
 			sprintf(result_str, "%lf", result);
 			adicionarTopo(stack, (void*) new_str(result_str));
@@ -253,7 +253,7 @@
 			sscanf(fator->c_str, "%lf", &e1);
 			sscanf(r->c_str, "%lf", &e2);
 
-			if (e2 >= -PRECISION_DEFAULT && e2 <= PRECISION_DEFAULT) {
+			if (e1 >= -PRECISION_DEFAULT && e1 <= PRECISION_DEFAULT) {
 				printf("Erro na linha %d! Divisão por zero inválida!", lineno-1);
 				eraser_str(fator);
 				eraser_str(r);
@@ -261,7 +261,7 @@
 				exit(100);
 			}
 
-			double result = e1 / e2;
+			double result = e2 / e1;
 			char result_str[ len_double(result, PRECISION_DEFAULT) + 1 ];
 			sprintf(result_str, "%lf", result);
 			adicionarTopo(stack, (void*) new_str(result_str));
